@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ClinicBook</title>
+</head>
+<body>
+
+<h1>ClinicBook</h1>
+
+<h3>Register / Login</h3>
+<input id="email" placeholder="Email"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+
+<button onclick="signUp()">Sign Up</button>
+<button onclick="login()">Login</button>
+
+<hr>
+
+<h3>Add Patient</h3>
+<button onclick="addPatient()">Add Test Patient</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+const supabase = supabase.createClient(
+  "PUT_YOUR_URL_HERE",
+  "PUT_YOUR_ANON_KEY_HERE"
+);
+
+// تسجيل
+async function signUp() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+
+  await supabase.auth.signUp({ email, password });
+  alert("User created");
+}
+
+// دخول
+async function login() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+
+  await supabase.auth.signInWithPassword({ email, password });
+  alert("Logged in");
+}
+
+// إضافة مريض
+async function addPatient() {
+  await supabase.from('patients').insert([
+    { name: "Test Patient", phone: "0550000000" }
+  ]);
+
+  alert("Patient added");
+}
+</script>
+
+</body>
+</html>
